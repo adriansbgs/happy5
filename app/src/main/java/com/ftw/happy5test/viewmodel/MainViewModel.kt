@@ -5,29 +5,28 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ftw.happy5test.model.Movies
+import com.ftw.happy5test.utils.ResultState
 import io.reactivex.disposables.CompositeDisposable
 
 class MainViewModel @ViewModelInject constructor(private val repository: MainRepository) :
     ViewModel() {
+
     val compositeDisposable = CompositeDisposable()
-    val moviesData = MutableLiveData<MutableList<Movies>>()
-    val error = MutableLiveData<Throwable>()
-    val loading = MutableLiveData<Boolean>()
+    val mutableResultState = MutableLiveData<ResultState>()
 
 
     fun getAllMovies() {
         compositeDisposable.add(
             repository.getAllMovies()
                 .doOnSubscribe {
-                    loading.postValue(true)
+                    mutableResultState.value = ResultState.Loading(true)
                 }
                 .subscribe({
-                    loading.postValue(false)
-                    val data = it.results as MutableList<Movies>
-                    moviesData.postValue(data)
-                    Log.d("MainVM", "getAllMovies: $data")
+                    mutableResultState.value = ResultState.Loading(false)
+
+                    mutableResultState.value = ResultState.Success(it.results)
                 }, {
-                    error.postValue(it)
+                    mutableResultState.value = ResultState.Error(it)
                     Log.d("MainVM", "getAllMovies ERROR: $it")
                 })
         )

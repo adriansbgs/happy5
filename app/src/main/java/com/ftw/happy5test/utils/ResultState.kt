@@ -1,7 +1,7 @@
 package com.ftw.happy5test.utils
 
 sealed class ResultState {
-    object loading : ResultState()
-    data class Success<T>(val data: T, val msg: String) : ResultState()
-    data class Error(val throwable: Throwable) : ResultState()
+    class Loading(val isloading: Boolean) : ResultState()
+    class Success<T>(val data: T) : ResultState()
+    class Error(val e: Throwable) : ResultState()
 }

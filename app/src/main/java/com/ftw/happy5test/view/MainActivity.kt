@@ -1,13 +1,17 @@
 package com.ftw.happy5test.view
 
+import android.graphics.Movie
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ftw.happy5test.databinding.ActivityMainBinding
 import com.ftw.happy5test.model.Movies
+import com.ftw.happy5test.model.ResponseMovies
+import com.ftw.happy5test.utils.ResultState
 import com.ftw.happy5test.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,20 +19,41 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var movieViewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
+    private var adapter: MoviesAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        val data = mutableListOf<Movies>()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val movieData : MutableList<Movies> = mutableListOf()
+
         movieViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        binding.button.setOnClickListener {
-            movieViewModel.getAllMovies()
-            movieViewModel.moviesData.observe(this, Observer {
-                Log.d("MainActivity", "onCreate: $data")
-            })
+        movieViewModel.getAllMovies()
+        movieViewModel.mutableResultState.observe(this, Observer { state ->
+            when (state) {
+                is ResultState.Success<*> -> {
+                    movieData.addAll(state.data as List<Movies>)
+                    adapter = MoviesAdapter(movieData)
+                    Log.d("MainActivity", "onCreate: $movieData")
+                    binding.rvMovies.also {
+                        it.layoutManager = LinearLayoutManager(this)
+                        it.adapter = adapter
+                    }
+                }
+                is ResultState.Loading -> {
+                    Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                }
+                is ResultState.Error -> {
+                    Toast.makeText(this, state.toString(), Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        })
+        adapter!!.setListener { movies ->
+
 
         }
+
     }
 }
