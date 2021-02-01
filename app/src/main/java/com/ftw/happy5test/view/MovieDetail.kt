@@ -34,6 +34,9 @@ class MovieDetail : AppCompatActivity() {
         movieDetailViewModel.mutableResultState.observe(this, Observer { state ->
             stateResult(state)
         })
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun stateResult(state: ResultState) {
