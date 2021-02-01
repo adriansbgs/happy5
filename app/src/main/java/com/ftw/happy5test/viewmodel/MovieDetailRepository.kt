@@ -2,7 +2,7 @@ package com.ftw.happy5test.viewmodel
 
 import androidx.multidex.BuildConfig
 import com.ftw.happy5test.api.ApiServices
-import com.ftw.happy5test.model.ResponseMovies
+import com.ftw.happy5test.model.ResponseMovieDetail
 import com.ftw.happy5test.utils.API_KEY
 import com.ftw.happy5test.utils.BASE_URL
 import dagger.Module
@@ -21,8 +21,9 @@ import javax.inject.Inject
 
 @InstallIn(ApplicationComponent::class)
 @Module
-class MainRepository @Inject constructor() {
-    private val TAG = MainRepository::class.java.simpleName
+class MovieDetailRepository @Inject constructor() {
+    private val TAG = MovieDetailRepository::class.java.simpleName
+
     private fun serviceMainMovie(): ApiServices {
         val client = OkHttpClient().newBuilder().addInterceptor(HttpLoggingInterceptor().apply {
             level =
@@ -42,9 +43,8 @@ class MainRepository @Inject constructor() {
         return retrofit.create(ApiServices::class.java)
     }
 
-    fun getAllMovies(): Single<ResponseMovies> {
-        return serviceMainMovie().getAllMovies(apiKey = API_KEY, limit = 3)
+    fun getMovieDetail(movieId: Int): Single<ResponseMovieDetail> {
+        return serviceMainMovie().getDetailMovie(id = movieId, apiKey = API_KEY, limit = 3)
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
-
 }

@@ -36,15 +36,4 @@ class MainViewModel @ViewModelInject constructor(private val repository: MainRep
         super.onCleared()
         compositeDisposable.clear()
     }
-
-    /*class Factory@Inject
-    constructor(private val repository: MainRepository) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            try {
-                return MainViewModel(repository) as T
-            } catch (e: Exception) {
-                throw RuntimeException(e)
-            }
-        }
-    }*/
 }

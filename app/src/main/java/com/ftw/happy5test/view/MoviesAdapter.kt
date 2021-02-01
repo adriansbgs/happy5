@@ -31,6 +31,9 @@ class MoviesAdapter(private val dataMovies: List<Movies> = listOf(),
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         holder.itemMoviesBinding.movie = dataMovies[position]
+        holder.itemMoviesBinding.itemMovies.setOnClickListener {
+            listener.invoke(dataMovies[position])
+        }
     }
 
     override fun getItemCount(): Int = dataMovies.size
@@ -38,14 +41,6 @@ class MoviesAdapter(private val dataMovies: List<Movies> = listOf(),
     inner class MoviesViewHolder(val itemMoviesBinding: ItemMoviesBinding) :
         RecyclerView.ViewHolder(itemMoviesBinding.root) {
 
-        fun bind(data: Movies) {
-            itemMoviesBinding.movie = data
-            itemMoviesBinding.executePendingBindings()
-
-            itemMoviesBinding.itemMovies.setOnClickListener {
-                listener.invoke(data)
-            }
-        }
     }
 
     companion object {
