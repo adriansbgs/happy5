@@ -25,8 +25,8 @@
                 android:id="@+id/imgPoster"
                 android:layout_width="120dp"
                 android:layout_height="200dp"
-                app:layout_constraintStart_toStartOf="parent"
                 android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:loadImage='@{movie.poster_path}'
                 tools:src="@tools:sample/backgrounds/scenic" />
@@ -48,9 +48,50 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="6"
                 android:text="@{movie.overview}"
                 app:layout_constraintStart_toStartOf="@+id/tvTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                tools:text="@tools:sample/lorem/random" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:max="5"
+                android:progressTint="#FF9800"
+                android:transformPivotX="0dp"
+                android:transformPivotY="30dp"
+                style="@android:style/Widget.DeviceDefault.RatingBar.Small"
+                app:layout_constraintStart_toStartOf="@+id/tvOverview"
+                app:layout_constraintTop_toBottomOf="@+id/tvOverview" />
+
+            <TextView
+                android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{Double.toString(movie.vote_average/2)}"
+                android:textColor="#FF9800"
+                app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
+                app:layout_constraintStart_toEndOf="@+id/ratingBar"
+                app:layout_constraintTop_toTopOf="@+id/ratingBar"
+                tools:text="@tools:sample/last_names" />
+
+            <TextView
+                android:id="@+id/tvTotalVotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="@{`(` + String.format(`%,d`,movie.vote_count) + ` people)`}"
+                android:textSize="10sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="@+id/tvRating"
+                app:layout_constraintStart_toEndOf="@+id/tvRating"
+                app:layout_constraintTop_toTopOf="@+id/tvRating"
+                tools:text="@tools:sample/last_names" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

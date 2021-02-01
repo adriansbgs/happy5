@@ -27,7 +27,6 @@ class MovieDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val TAG = MovieDetail::class.java.simpleName
         movieId = intent.getIntExtra("movieId", 0)
         movieDetailViewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
@@ -56,7 +55,7 @@ class MovieDetail : AppCompatActivity() {
             if (!url.isNullOrEmpty()) {
                 Glide.with(posterImg)
                     .load(BASE_URL_IMG + url)
-                    .transform(RoundedCorners(8))
+                    .transform(RoundedCorners(16))
                     .into(posterImg)
             }
         }
