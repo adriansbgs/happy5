@@ -3,7 +3,6 @@ package com.ftw.happy5test.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -65,10 +64,12 @@ class MoviesAdapter(
         @JvmStatic
         @BindingAdapter("loadImage")
         fun loadImage(posterImg: ImageView, url: String) {
-            Glide.with(posterImg)
-                .load(BASE_URL_IMG + url)
-                .transform(RoundedCorners(16))
-                .into(posterImg)
+            if (!url.isNullOrEmpty()) {
+                Glide.with(posterImg)
+                    .load(BASE_URL_IMG + url)
+                    .transform(RoundedCorners(20))
+                    .into(posterImg)
+            }
         }
     }
 }

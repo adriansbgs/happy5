@@ -2,7 +2,7 @@ package com.ftw.happy5test.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -25,37 +25,53 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val movieData: MutableList<Movies> = mutableListOf()
 
         movieViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         movieViewModel.getAllMovies()
         movieViewModel.mutableResultState.observe(this, Observer { state ->
-            when (state) {
-                is ResultState.Success<*> -> {
-                    movieData.addAll(state.data as List<Movies>)
-                    adapter = MoviesAdapter(movieData)
-                    Log.d("MainActivity", "onCreate: $movieData")
-                    binding.rvMovies.also {
-                        it.layoutManager = LinearLayoutManager(this)
-                        it.adapter = adapter
-                    }
-                    adapter.setListener { movies ->
-                        val movieId = movies.id
-                        Intent(this@MainActivity, MovieDetail::class.java).apply {
-                            putExtra("movieId", movieId)
-                            startActivity(this)
-                        }
-                    }
+            stateResult(state)
+        })
+    }
+
+    private fun stateResult(state: ResultState) {
+
+        when (state) {
+            is ResultState.Success<*> -> {
+                binding.shimmer.stopShimmer()
+                binding.shimmer.visibility = View.GONE
+                binding.rvMovies.visibility = View.VISIBLE
+                adapter = MoviesAdapter(state.data as List<Movies>)
+                binding.rvMovies.also {
+                    it.layoutManager = LinearLayoutManager(this)
+                    it.adapter = adapter
                 }
-                is ResultState.Loading -> {
-                    Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
-                }
-                is ResultState.Error -> {
-                    Toast.makeText(this, state.toString(), Toast.LENGTH_SHORT).show()
+                adapter.setListener { movies ->
+                    val movieId = movies.id
+                    Intent(this@MainActivity, MovieDetail::class.java).apply {
+                        putExtra("movieId", movieId)
+                        startActivity(this)
+                    }
                 }
             }
+            is ResultState.Loading -> {
+                binding.shimmer.startShimmer()
+            }
+            is ResultState.Error -> {
+                binding.shimmer.stopShimmer()
+                binding.shimmer.visibility = View.GONE
+                Toast.makeText(this, state.toString(), Toast.LENGTH_SHORT).show()
+            }
+        }
 
-        })
+    }
 
+    override fun onResume() {
+        super.onResume()
+        binding.shimmer.startShimmer()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding.shimmer.stopShimmer()
     }
 }

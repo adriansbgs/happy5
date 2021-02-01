@@ -1,7 +1,7 @@
 package com.ftw.happy5test.view
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -32,20 +32,25 @@ class MovieDetail : AppCompatActivity() {
         movieDetailViewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
         movieDetailViewModel.getMovieDetail(movieId)
         movieDetailViewModel.mutableResultState.observe(this, Observer { state ->
-            when (state) {
-                is ResultState.Success<*> -> {
-                    val dataDetail: ResponseMovieDetail = state.data as ResponseMovieDetail
-                    binding.movieDetail = dataDetail
-                    Log.d(TAG, "onCreateMovieDetail: $dataDetail")
-                }
-                is ResultState.Loading -> {
-                    Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
-                }
-                is ResultState.Error -> {
-                    Toast.makeText(this, state.toString(), Toast.LENGTH_SHORT).show()
-                }
-            }
+            stateResult(state)
         })
+    }
+
+    private fun stateResult(state: ResultState) {
+        when (state) {
+            is ResultState.Success<*> -> {
+                binding.loadingAnim.visibility = View.GONE
+                val dataDetail: ResponseMovieDetail = state.data as ResponseMovieDetail
+                binding.movieDetail = dataDetail
+            }
+            is ResultState.Loading -> {
+                binding.loadingAnim.visibility = View.VISIBLE
+            }
+            is ResultState.Error -> {
+                binding.loadingAnim.visibility = View.GONE
+                Toast.makeText(this, state.toString(), Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     companion object {
@@ -55,7 +60,7 @@ class MovieDetail : AppCompatActivity() {
             if (!url.isNullOrEmpty()) {
                 Glide.with(posterImg)
                     .load(BASE_URL_IMG + url)
-                    .transform(RoundedCorners(16))
+                    .transform(RoundedCorners(20))
                     .into(posterImg)
             }
         }
