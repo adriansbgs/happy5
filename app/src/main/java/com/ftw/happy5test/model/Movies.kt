@@ -8,11 +8,11 @@ data class Movies (
     var original_language: String = "",
     var original_title: String = "",
     var overview: String = "",
-    var popularity: Int = 0,
+    var popularity: Double = 0.0,
     var poster_path: String = "",
-    var release_date: Int = 0,
+    var release_date: String = "",
     var title: String = "",
-    var video: String = "",
-    var vote_average: Int = 0,
+    var video: Boolean = false,
+    var vote_average: Double = 0.0,
     var vote_count: Int = 0
         )
