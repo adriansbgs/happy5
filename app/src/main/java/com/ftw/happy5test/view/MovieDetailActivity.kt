@@ -19,7 +19,7 @@ import com.ftw.happy5test.viewmodel.MovieDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieDetail : AppCompatActivity() {
+class MovieDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityMovieDetailBinding
     lateinit var movieDetailViewModel: MovieDetailViewModel
     private var movieId: Int = 0
@@ -27,7 +27,7 @@ class MovieDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val TAG = MovieDetail::class.java.simpleName
+        val TAG = MovieDetailActivity::class.java.simpleName
         movieId = intent.getIntExtra("movieId", 0)
         movieDetailViewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
         movieDetailViewModel.getMovieDetail(movieId)
