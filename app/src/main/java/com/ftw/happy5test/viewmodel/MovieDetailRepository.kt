@@ -22,8 +22,6 @@ import javax.inject.Inject
 @InstallIn(ApplicationComponent::class)
 @Module
 class MovieDetailRepository @Inject constructor() {
-    private val TAG = MovieDetailRepository::class.java.simpleName
-
     private fun serviceMainMovie(): ApiServices {
         val client = OkHttpClient().newBuilder().addInterceptor(HttpLoggingInterceptor().apply {
             level =

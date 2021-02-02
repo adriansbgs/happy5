@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ftw.happy5test.databinding.ActivityMainBinding
@@ -18,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var movieViewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
-    lateinit var adapter: MoviesAdapter
+    private lateinit var adapter: MoviesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         movieViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         movieViewModel.getAllMovies()
-        movieViewModel.mutableResultState.observe(this, Observer { state ->
+        movieViewModel.mutableResultState.observe(this, { state ->
             stateResult(state)
         })
     }

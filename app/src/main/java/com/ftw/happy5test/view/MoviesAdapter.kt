@@ -1,3 +1,5 @@
+@file:Suppress("RemoveEmptyClassBody", "RemoveEmptyClassBody")
+
 package com.ftw.happy5test.view
 
 import android.view.LayoutInflater
@@ -64,7 +66,7 @@ class MoviesAdapter(
         @JvmStatic
         @BindingAdapter("loadImage")
         fun loadImage(posterImg: ImageView, url: String) {
-            if (!url.isNullOrEmpty()) {
+            if (url.isNotEmpty()) {
                 Glide.with(posterImg)
                     .load(BASE_URL_IMG + url)
                     .transform(RoundedCorners(20))

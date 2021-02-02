@@ -81,6 +81,7 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     def hilt_viewmodels = "1.0.0-alpha01"
+    //noinspection GradleDependency
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewmodels"
     kapt "androidx.hilt:hilt-compiler:$hilt_viewmodels"
 

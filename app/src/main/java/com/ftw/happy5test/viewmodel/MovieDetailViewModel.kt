@@ -1,3 +1,5 @@
+@file:Suppress("PropertyName")
+
 package com.ftw.happy5test.viewmodel
 
 import android.util.Log
@@ -8,19 +10,19 @@ import com.ftw.happy5test.utils.ResultState
 import io.reactivex.disposables.CompositeDisposable
 
 class MovieDetailViewModel @ViewModelInject constructor(private val repository: MovieDetailRepository) : ViewModel() {
-    val compositeDisposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
     val mutableResultState = MutableLiveData<ResultState>()
-    val TAG = MovieDetailViewModel::class.java.simpleName
+    private val TAG = MovieDetailViewModel::class.java.simpleName
 
     fun getMovieDetail(movieId: Int) {
         compositeDisposable.add(
             repository.getMovieDetail(movieId).doOnSubscribe {
-                mutableResultState.value = ResultState.Loading(true)
+                mutableResultState.value = ResultState.Loading()
             }.subscribe({
-                mutableResultState.value = ResultState.Loading(false)
+                mutableResultState.value = ResultState.Loading()
                 mutableResultState.value = ResultState.Success(it)
             }, {
-                mutableResultState.value = ResultState.Error(it)
+                mutableResultState.value = ResultState.Error()
                 Log.d(TAG, "getMovieDetail: ERROR $it")
             })
         )

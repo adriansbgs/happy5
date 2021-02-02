@@ -32,7 +32,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:background="@color/gray_shimmer"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 app:layout_constraintStart_toEndOf="@+id/imgPoster"
                 app:layout_constraintTop_toTopOf="@+id/imgPoster"
                 tools:text="@tools:sample/full_names" />

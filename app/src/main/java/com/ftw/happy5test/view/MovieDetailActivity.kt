@@ -6,7 +6,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -20,18 +19,17 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MovieDetailActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMovieDetailBinding
-    lateinit var movieDetailViewModel: MovieDetailViewModel
+    private lateinit var binding: ActivityMovieDetailBinding
+    private lateinit var movieDetailViewModel: MovieDetailViewModel
     private var movieId: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val TAG = MovieDetailActivity::class.java.simpleName
         movieId = intent.getIntExtra("movieId", 0)
         movieDetailViewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
         movieDetailViewModel.getMovieDetail(movieId)
-        movieDetailViewModel.mutableResultState.observe(this, Observer { state ->
+        movieDetailViewModel.mutableResultState.observe(this, { state ->
             stateResult(state)
         })
         binding.btnBack.setOnClickListener {
