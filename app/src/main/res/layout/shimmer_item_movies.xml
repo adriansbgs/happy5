@@ -19,7 +19,7 @@
                 android:id="@+id/imgPoster"
                 android:layout_width="120dp"
                 android:layout_height="200dp"
-                android:background="@android:color/darker_gray"
+                android:background="@color/gray_shimmer"
                 android:elevation="2dp"
                 android:scaleType="fitXY"
                 app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
                 style="@style/H1"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
+                android:background="@color/gray_shimmer"
                 android:layout_marginLeft="8dp"
                 app:layout_constraintStart_toEndOf="@+id/imgPoster"
                 app:layout_constraintTop_toTopOf="@+id/imgPoster"
@@ -39,7 +39,7 @@
 
             <TextView
                 android:id="@+id/tvOverview"
-                android:background="@android:color/darker_gray"
+                android:background="@color/gray_shimmer"
                 style="@style/OverviewShort"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:max="5"
-                android:background="@android:color/darker_gray"
+                android:background="@color/gray_shimmer"
                 android:progressTint="#FF9800"
                 android:transformPivotX="0dp"
                 android:transformPivotY="30dp"
@@ -65,7 +65,7 @@
             <TextView
                 android:id="@+id/tvRating"
                 style="@style/GeneralUse"
-                android:background="@android:color/darker_gray"
+                android:background="@color/gray_shimmer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -78,7 +78,7 @@
             <TextView
                 android:id="@+id/tvTotalVotes"
                 style="@style/H5Italic"
-                android:background="@android:color/darker_gray"
+                android:background="@color/gray_shimmer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"

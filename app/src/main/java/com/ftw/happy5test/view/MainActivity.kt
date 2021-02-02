@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 adapter.setListener { movies ->
                     val movieId = movies.id
-                    Intent(this@MainActivity, MovieDetail::class.java).apply {
+                    Intent(this@MainActivity, MovieDetailActivity::class.java).apply {
                         putExtra("movieId", movieId)
                         startActivity(this)
                     }
